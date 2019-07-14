@@ -8,13 +8,13 @@ enrichedSet := Reddit_ECL.Subreddits.Files.subreddit_enriched_ds;
 crossIDSet := SET(enrichedSet, TRIM(cross_subreddit_ID));
 
 resultsTable := TABLE(
-		MASTER_OG, 
-				{to_base36_id, 
-				to_subreddit_name, 
-				UNSIGNED8 currentSub := IF(MASTER_OG.to_base36_id != '',
-																		IF((MASTER_OG.to_base36_id IN crossIDSet), +1, +0), 
-																		+0)}, 
-		to_base36_id);
+	MASTER_OG, 
+		{to_base36_id, 
+		to_subreddit_name, 
+		UNSIGNED8 currentSub := IF(MASTER_OG.to_base36_id != '',
+			IF((MASTER_OG.to_base36_id IN crossIDSet), +1, +0), 
+			+0)}, 
+	to_base36_id);
 
 sortedResults := SORT(resultsTable, -currentsub );
 
